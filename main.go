@@ -22,16 +22,14 @@ func main() {
 
 	// Book Repository
 	bookRepository := book.NewRepository(db)
+	bookServices := book.NewService(bookRepository)
 
-	books, err := bookRepository.FindAll()
-	if err != nil {
-		panic(err)
+	bookRequest := book.BookRequest{
+		Title: "Programmer Golang",
+		Price: "90000",
 	}
 
-	// tampilkan isi books
-	for _, book := range books {
-		fmt.Println("Title", book.Title)
-	}
+	bookServices.Create(bookRequest)
 
 	router := gin.Default()
 
@@ -47,3 +45,11 @@ func main() {
 
 	router.Run()
 }
+
+// LAYER
+// Main
+// Handler
+// Service
+// Repository
+// DB
+// MySQL
