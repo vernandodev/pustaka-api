@@ -5,8 +5,9 @@ import "time"
 type Book struct {
 	ID          uint `gorm:"primaryKey"`
 	Title       string
-	Description string
 	Price       int
+	Email       string
+	Description string
 	Rating      int
 	Discount    int
 	CreatedAt   time.Time
