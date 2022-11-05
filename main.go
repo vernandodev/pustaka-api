@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/vernandodev/pustaka-api/book"
-	"github.com/vernandodev/pustaka-api/controllers"
+	"github.com/vernandodev/pustaka-api/handler"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -23,13 +23,7 @@ func main() {
 	// Book Repository
 	bookRepository := book.NewRepository(db)
 	bookServices := book.NewService(bookRepository)
-
-	bookRequest := book.BookRequest{
-		Title: "Programmer Golang",
-		Price: "90000",
-	}
-
-	bookServices.Create(bookRequest)
+	bookHandler := handler.NewBookHandler(bookServices)
 
 	router := gin.Default()
 
@@ -37,11 +31,11 @@ func main() {
 	v1 := router.Group("/v1")
 	v2 := router.Group("/v2")
 
-	v1.GET("/", controllers.RootHandler)
-	v2.GET("/hello", controllers.HelloHandler)
-	router.GET("/books/:id/:title", controllers.BooksHandler)
-	router.GET("/query", controllers.QueryHandler)
-	router.POST("/books", controllers.PostBooksHandler)
+	v1.GET("/", bookHandler.RootHandler)
+	v2.GET("/hello", bookHandler.HelloHandler)
+	router.GET("/books/:id/:title", bookHandler.BooksHandler)
+	router.GET("/query", bookHandler.QueryHandler)
+	router.POST("/books", bookHandler.PostBooksHandler)
 
 	router.Run()
 }

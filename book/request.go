@@ -7,6 +7,6 @@ type BookRequest struct {
 	Price       json.Number `json:"price" binding:"required,number"` // memakai json.Number akan mengkonversi input dari string menjadi number karena menggunakan validator.ValidatorErrors
 	Email       string      `json:"email" binding:"required,email"`
 	Description string      `json:"description" binding:"required"`
-	Rating      int         `json:"rating" binding:"required,number"`
-	Discount    int         `json:"discount" binding:"required,number"`
+	Rating      json.Number         `json:"rating" binding:"required,number"`
+	Discount    json.Number         `json:"discount" binding:"required,number"`
 }
